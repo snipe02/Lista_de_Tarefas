@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gerenciamento de Tarefas com Firebase</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class=""></i> Sistemas Lista de Terefa</h1>
+            <p>seja bem vindo a minha lista de tarefa</p>
+            <div class="firebase-status">
+                <div class="status-indicator" id="firebaseStatus"></div>
+                <span id="statusText">Inicializando Firebase...</span>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="controls">
+                <div class="reorder-info">
+                    <i class="fas fa-info-circle"></i> aperta em criar ( NOVA TAREFA ) e preencha😁✅
+                </div>
+                <button class="add-btn" onclick="openAddModal()">
+                    <i class="fas fa-plus"></i> Nova Tarefa
+                </button>
+            </div>
+
+            <div class="tasks-container">
+                <div class="loading" id="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Carregando tarefas...</p>
+                </div>
+                <ul class="task-list" id="taskList">
+                    <!-- As tarefas serão inseridas aqui via JavaScript -->
+                </ul>
+            </div>
+
+            <div class="footer">
+                <div class="total-cost">
+                    Custo Total: <span id="totalCost">R$0,00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Adicionar/Editar Tarefa -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Nova Tarefa</h2>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="taskName">Nome da Tarefa </label>
+                    <input type="text" id="taskName" required placeholder="Digite o nome da tarefa">
+                    <div class="error-message" id="nameError">Este nome de tarefa já existe!</div>
+                </div>
+                <div class="form-group">
+                    <label for="taskCost">Custo (R$) </label>
+                    <input type="number" id="taskCost" min="0" step="0.01" required placeholder="0.00">
+                    <div class="error-message" id="costError">O custo deve ser maior ou igual a zero!</div>
+                </div>
+                <div class="form-group">
+                    <label for="taskDeadline">Data Limite </label>
+                    <div class="date-input-container">
+                        <input type="text" id="taskDeadline" required placeholder="DD/MM/AAAA">
+                        <span class="date-format-guide">DD/MM/AAAA</span>
+                    </div>
+                    <div class="date-format-hint">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Digite a data no formato (ex: 10/03/2026)</span>
+                    </div>
+                    <div class="error-message" id="dateError">Informe uma data válida no formato DD/MM/AAAA</div>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-save">Salvar</button>
+                    <button type="button" class="btn btn-cancel" onclick="closeModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação para Excluir -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content confirm-modal">
+            <h2>Confirmar Exclusão</h2>
+            <div class="confirm-message" id="confirmMessage">
+                Tem certeza que deseja excluir esta tarefa?
+            </div>
+            <div class="confirm-buttons">
+                <button class="btn btn-yes" onclick="confirmDelete()">Sim, Excluir</button>
+                <button class="btn btn-no" onclick="closeConfirmModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="firebase.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

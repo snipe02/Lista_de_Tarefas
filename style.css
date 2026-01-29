@@ -1,0 +1,481 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #424641 0%, #555358 100%); /*cor de fundo*/
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: rgb(186, 211, 212);  /*mudar cores de dentro da listas cadastrado*/
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #92bce0 0%, #0f0f0f 100%); /*mudar cor do nome sistema*/
+    color: rgb(247, 244, 244); /*mudar cor do nome sistema*/
+    padding: 30px;
+    text-align: center;
+    position: relative;
+}
+
+.firebase-status {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    background: rgba(224, 215, 215, 0.384); /*mudar a cores dentro de firebase*/
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ff4757;
+}
+
+.status-indicator.connected {
+    background: #0bbb05;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgb(14, 13, 13); /*mudar cores do sistema sombra*/
+}
+
+.main-content {
+    padding: 30px;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.reorder-info {
+    color: #666;
+    font-style: italic;
+}
+
+.add-btn {
+    background: linear-gradient(135deg, #0a38d1 0%, #0e1ac0 100%); /*cor da tarefa*/
+    color: rgb(243, 238, 238);
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(45, 218, 10, 0.4);
+}
+
+.add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(89, 90, 88, 0.897);
+}
+
+.add-btn i {
+    margin-right: 8px;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #0a0a0a;
+}
+
+.loading-spinner {
+    border: 4px solid #131312;
+    border-top: 4px solid #ccddcb;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.tasks-container {
+    background: rgb(168, 166, 166);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(173, 173, 173, 0.815);
+    margin-bottom: 30px;
+    min-height: 200px;
+}
+
+.task-list {
+    list-style: none;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #181616; /*muda cores da linha dentro da tarefa*/ 
+    transition: all 0.3s ease;
+    background: rgb(129, 129, 129);  /* mudar cores  dentro de tarefa ja cadastrado */
+    cursor: move;
+}
+
+.task-item.dragging {
+    opacity: 0.5;
+    transform: scale(0.98);
+}
+
+.task-item.high-cost {
+    background: linear-gradient(135deg, #f1da05 0%, #f1de06 100%) !important;
+    border-left: 5px solid #c1f30a; /* mudar a cores a cima de 1000*/
+}
+
+.task-item:hover {
+    background: #3d6622;   /*mudar cores quando passa por cima*/
+    transform: translateX(5px);
+}
+
+.task-info {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
+.task-name {
+    font-weight: 600;
+    color: #020202;  /* mudar cores dos nomes listado*/
+    font-size: 1.1em;
+}
+
+.task-cost {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: #0a0a0a;  /* mudar cores do valor*/
+    font-size: 1.2em;
+}
+
+.task-cost::before {
+    content: ' ';
+}
+
+.task-deadline {
+    color: #070707; /* mudar cores da data*/
+    font-size: 0.95em;
+    background: #b7bfc7; /* mudar cores da data*/
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.task-id {
+    color: #74b9ff;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.task-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #249737 0%, #269e62 100%); /*mudar cores editor*/
+    color: white;
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #ff5e3a 0%, #ff2a68 100%);
+    color: rgb(240, 232, 232);
+}
+
+.btn-up {
+    background: linear-gradient(135deg, #94a81f 0%, #72d318 100%); /* cores da seta*/
+    color: white;
+}
+
+.btn-down {
+    background: linear-gradient(135deg, #f0ebe4 0%, #c9bfbe 100%);
+    color: rgb(238, 8, 8);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(128, 206, 27, 0.2);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.order-buttons {
+    display: flex;
+    gap: 5px;
+    margin-left: 10px;
+}
+
+.footer {
+    background: linear-gradient(135deg, #1a1b17 0%, #0e0d0d 100%); /*mudar cor de dentro da palavra custo valores*/
+    color: rgb(243, 233, 233); /*mudar cor  da palavra custo*/
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+.total-cost {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.total-cost span {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: #8ecf25;  /*mudar cor do valores R$*/
+    font-size: 2em;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); /*mudar cor do fundo da tarefa*/
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: rgb(202, 196, 196); /* mudar cores da tarefa*/
+    padding: 40px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal h2 {
+    margin-bottom: 30px;
+    color: #333;
+    text-align: center;
+    font-size: 1.8em;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #000000;  /*mudar a cores do quadrado dentro da tarefa*/
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #554b4b; /*mudar a cores do quadrado dentro da tarefa*/
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #323a32; /*mudar a cores do quadrado dentro da tarefa*/
+}
+
+.date-input-container {
+    position: relative;
+}
+
+.date-input-container input {
+    padding-left: 15px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.date-format-guide {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #999;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    background: white;
+    padding: 0 2px;
+}
+
+.date-input-container input:focus + .date-format-guide,
+.date-input-container input:not(:placeholder-shown) + .date-format-guide {
+    opacity: 0;
+}
+
+.date-format-hint {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.form-buttons button {
+    flex: 1;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-cancel {
+    background: #f30404bd;
+    color: #ffffff;
+}
+
+.error-message {
+    color: #61645d;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+}
+
+.confirm-modal {
+    max-width: 400px;
+}
+
+.confirm-message {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 18px;
+    color: #333;
+}
+
+.confirm-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-yes {
+    background: linear-gradient(135deg, #ff5e3a 0%, #ff2a68 100%);
+    color: white;
+}
+
+.btn-no {
+    background: #e0e0e0;
+    color: #666;
+}
+
+.drag-handle {
+    margin-right: 15px;
+    color: #74b9ff;
+    cursor: move;
+    font-size: 20px;
+}
+
+@media (max-width: 768px) {
+    .task-info {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .task-actions {
+        flex-wrap: wrap;
+    }
+    
+    .btn {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .firebase-status {
+        position: relative;
+        top: 0;
+        right: 0;
+        justify-content: center;
+        margin-top: 10px;
+    }
+}
